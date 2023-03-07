@@ -15,11 +15,30 @@ function App() {
     {title:"Minum", count:1},
   ])
 
+  {/*Submit method*/ }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const addedTodos = [...todos, {
+      title:value, 
+      count:1
+    }]
+    setTodos(addedTodos)
+  }
+
+  {/*Plus method*/ }
   const handleAdd = (index) => {
     const newTodos = [...todos]
     newTodos[index].count += 1
     setTodos(newTodos)
   }
+  {/*Minus method*/ }
+  const handleMin = (index) => {
+    const newTodos = [...todos]
+    newTodos[index].count -= 1
+    setTodos(newTodos)
+  }
+  
 
   return (
    <>
@@ -29,8 +48,8 @@ function App() {
     </nav>
 
     <section className="container">
-      <form className="form">
-        <input onChange={(event) => {setValue(event.target.value)}} 
+      <form className="form" onSubmit={handleSubmit}>
+        <input onChange={(e) => {setValue(e.target.value)}} 
         value={value}
           className="input" type="text" placeholder="List" 
         />
@@ -49,7 +68,7 @@ function App() {
               <div className="todo-icon">
                 <div className="todo-count">{todo.count}</div>
 
-                <button className="todo-action-button">
+                <button onClick={() => handleMin(index)} className="todo-action-button">
                   <img src={minusIcon} alt="minus icon"/>
                 </button>
 
