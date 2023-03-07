@@ -4,7 +4,8 @@ import shoppingIcon from './assets/shopping-icon.svg'
 
 function App() {
 
-  const [count, setCount] = useState(0); //tupple count
+  const [value, setValue] = useState('')
+  console.log(value)
 
   return (
    <>
@@ -15,7 +16,8 @@ function App() {
 
     <section className="container">
       <form className="form">
-        <input
+        <input onChange={(event) => {setValue(event.target.value)}} 
+        value={value}
           className="input" type="text" placeholder="List" 
         />
         <button className="add-button" type="submit">Add</button>
