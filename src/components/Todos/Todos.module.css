@@ -21,7 +21,7 @@
     font-weight: 600;
 }
 
-.todo-count {
+.todoCount {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,14 +39,14 @@
     -o-border-radius: 6px;
 }
 
-.todo-icon {
+.todoIconWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 120px;
 }
 
-.todo-action-button {
+.todoActionButton {
     border: none;
     background: unset;
     padding: unset;
@@ -54,6 +54,6 @@
     width: 24px;
 }
 
-.todo-devider {
+.todoDevider {
     border-bottom: 1px solid var(--main-border-color);
 }

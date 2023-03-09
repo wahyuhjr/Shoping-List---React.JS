@@ -1,13 +1,10 @@
 import { useState } from "react"
-import './App.css'
 import Navbar from './components/Navbar'
 import Container from './components/Container'
-
-import plusIcon from './assets/plus-icon.svg'
-import minusIcon from './assets/minus-icon.svg'
 import SearchInput from './components/SearchInput'
 import Info from './components/Info'
-
+import Todos from './components/Todos'
+import Empty from './components/Empty'
 
 
 function App() {
@@ -87,31 +84,14 @@ function App() {
 
       {/* callback function */}
       {todos.length > 0 ? (
-        <div className="todos">
-        {todos.map((todo, index, arr) => {
-          return (
-            <div key={index} className={`todo ${!(arr.length === index + 1) && ('todo-devider')}`}>
-
-            {todo.title}
-
-              <div className="todo-icon">
-                <div className="todo-count">{todo.count}</div>
-
-                <button onClick={() => handleMin(index)} className="todo-action-button">
-                  <img src={minusIcon} alt="minus icon"/>
-                </button>
-
-                <button onClick={() => handleAdd(index)} className="todo-action-button">
-                  <img src={plusIcon} alt="plus icon"/>
-                </button>
-
-              </div>
-            </div>
-          )}
-          )}
-        </div>
+       <Todos
+        todos={todos}
+        onMinus={(index) => handleMin(index)}
+        onPlus={(index) => handleAdd(index)}
+       />
       ) : (
-        <div>Kosong!</div>
+        
+        <Empty/>
       )}
     </Container>
    </>
