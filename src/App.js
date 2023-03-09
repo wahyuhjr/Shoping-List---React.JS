@@ -1,9 +1,14 @@
 import { useState } from "react"
 import './App.css'
-import shoppingIcon from './assets/shopping-icon.svg'
+import Navbar from './components/Navbar'
+import Container from './components/Container'
+
 import plusIcon from './assets/plus-icon.svg'
 import minusIcon from './assets/minus-icon.svg'
-import classnames from 'classnames'
+import SearchInput from './components/SearchInput'
+import Info from './components/Info'
+
+
 
 function App() {
 
@@ -15,46 +20,70 @@ function App() {
     {title:"Minum", count:1},
   ])
 
-  {/*Submit method*/ }
+  //Submit method
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if(!value){
+      alert('Please enter a list')
+      return
+    }
 
     const addedTodos = [...todos, {
       title:value, 
       count:1
     }]
     setTodos(addedTodos)
+    setValue('')
   }
 
-  {/*Plus method*/ }
+  //Plus method
   const handleAdd = (index) => {
     const newTodos = [...todos]
     newTodos[index].count += 1
     setTodos(newTodos)
   }
-  {/*Minus method*/ }
+  //Minus method
   const handleMin = (index) => {
+
     const newTodos = [...todos]
-    newTodos[index].count -= 1
+
+    //selama jumlah count masih diatas 0 bisa lakukan pengurangan
+    if(newTodos[index].count > 0){
+      const newTodos = [...todos] 
+      newTodos[index].count -= 1
+    }
+    //kalo sudah 0 maka hapus list array value dengan index yang sesuai
+    else{
+      newTodos.splice(index, 1)
+    }
     setTodos(newTodos)
   }
-  
+
+  //Total Count
+  const getTotalCount = () => {
+    const totalCount = todos.reduce((total, num)=>{
+      return total + num.count
+    },0)
+    return totalCount
+  }  
 
   return (
    <>
-    <nav className="nav">
-      <img className="nav-icon" src={shoppingIcon} alt="shopping icon"/>
-      <h1 className="nav-title">Shopping List</h1>
-    </nav>
+    <Navbar/>
 
-    <section className="container">
-      <form className="form" onSubmit={handleSubmit}>
-        <input onChange={(e) => {setValue(e.target.value)}} 
-        value={value}
-          className="input" type="text" placeholder="List" 
-        />
-        <button className="add-button" type="submit">Add</button>
-      </form>
+    <Container>
+     <SearchInput
+      onSubmit={handleSubmit}
+      onChange={(e) => setValue(e.target.value)}
+      value={value}
+     />
+
+     <Info
+      todosLength={todos.length}
+      totalCount={getTotalCount()}
+      onDelete={()=>setTodos([])}
+     />
 
       {/* callback function */}
       {todos.length > 0 ? (
@@ -82,9 +111,9 @@ function App() {
           )}
         </div>
       ) : (
-        <div></div>
+        <div>Kosong!</div>
       )}
-    </section>
+    </Container>
    </>
   );
 }
